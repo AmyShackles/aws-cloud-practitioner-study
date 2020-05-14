@@ -97,7 +97,7 @@ class Prompts extends React.Component {
     );
   };
   resetDeck = () => {
-    this.setState({ cardsAvailable: cards }, () => this.next());
+    this.setState({ cardsAvailable: cards, cardsSeen: [] }, () => this.next());
   };
   render() {
     if (this.state.currentCard) {
