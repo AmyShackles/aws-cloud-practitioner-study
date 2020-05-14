@@ -15,12 +15,16 @@ const App = () => {
       <header className="App-header">
         <h2>Application to study for AWS Cloud Practitioner Exam</h2>
       </header>
-      <div className="buttons">
-        <button onClick={() => handleStudyChange("prompt")}>Flashcards</button>
-        <button onClick={() => handleStudyChange("quiz")}>Quizzes</button>
-      </div>
-      {studyType === "quiz" && <Quizzes />}
-      {studyType === "prompt" && <Prompts />}
+      <main>
+        <div className="buttons">
+          <button onClick={() => handleStudyChange("prompt")}>
+            Flashcards
+          </button>
+          <button onClick={() => handleStudyChange("quiz")}>Quizzes</button>
+        </div>
+        {studyType === "quiz" && <Quizzes />}
+        {studyType === "prompt" && <Prompts />}
+      </main>
     </div>
   );
 };

@@ -28,11 +28,14 @@
   padding-bottom: 2.5vh;
   display: flex;
   justify-content: space-evenly;
-  width: 80%;
+  width: 10%;
+  flex-direction: column;
 }
-.buttons button {
+.buttons button,
+.buttons div {
   padding: 2.5vh;
   font-size: 16px;
+  margin-top: 5vh;
 }
 .App-logo {
   height: 40vmin;
@@ -107,4 +110,17 @@
 .score {
   color: white;
   font-size: 20px;
+}
+main {
+  display: flex;
+  margin: 15px;
+}
+#quiz {
+  display: flex;
+  width: 80%;
+  justify-content: center;
+}
+#quiz p {
+  color: white;
+  font-size: 26px;
 }

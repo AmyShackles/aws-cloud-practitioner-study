@@ -103,8 +103,9 @@ class Quizzes extends React.Component {
     );
   };
   resetDeck = () => {
-    this.setState({ problemsAvailable: quizzes, wins: 0, attempts: 0 }, () =>
-      this.next()
+    this.setState(
+      { problemsAvailable: quizzes, problemsSeen: [], wins: 0, attempts: 0 },
+      () => this.next()
     );
   };
   setSelected = (selection) => {
@@ -120,40 +121,43 @@ class Quizzes extends React.Component {
     if (this.state.currentProblem) {
       return (
         <>
-          <div className="score">
-            Score: {this.state.wins}/{this.state.attempts} :{" "}
-            {this.state.wins &&
-              this.state.attempts &&
-              Math.round(this.state.wins / this.state.attempts) * 100}
-            %
-          </div>
-          <Quiz
-            question={this.state.currentProblem.question}
-            options={this.state.currentProblem.options}
-            answer={this.state.currentProblem.answer}
-            selection={this.state.selection}
-            setSelected={this.setSelected.bind(this)}
-          />
-          <div className="buttons">
-            {this.state.prevProblem && (
-              <button onClick={this.prev}>Previous question</button>
+          <div id="quiz">
+            {this.state.prevProblem ? (
+              <button className="buttons" onClick={this.prev}>
+                Previous question
+              </button>
+            ) : (
+              <div className="buttons" />
             )}
-            <button onClick={this.remove}>Remove question from deck</button>
+
+            <Quiz
+              question={this.state.currentProblem.question}
+              options={this.state.currentProblem.options}
+              answer={this.state.currentProblem.answer}
+              selection={this.state.selection}
+              setSelected={this.setSelected.bind(this)}
+              wins={this.state.wins}
+              attempts={this.state.attempts}
+            />
             {!this.state.lastProblem && (
-              <button onClick={this.next}>Random question</button>
+              <button className="buttons" onClick={this.next}>
+                Random question
+              </button>
             )}
+          </div>
+          <div className="buttons">
+            <button onClick={this.remove}>Remove question from deck</button>
           </div>
         </>
       );
     } else {
       return (
         <>
-          <div>
+          <div id="quiz">
             <p>There are no more cards in the deck</p>
-
-            <div className="buttons">
-              <button onClick={this.resetDeck}>Reset deck</button>
-            </div>
+          </div>
+          <div className="buttons">
+            <button onClick={this.resetDeck}>Reset deck</button>
           </div>
         </>
       );
