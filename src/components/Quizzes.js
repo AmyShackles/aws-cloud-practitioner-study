@@ -109,7 +109,6 @@ class Quizzes extends React.Component {
   };
   setSelected = (selection) => {
     const { answer } = this.state.currentProblem;
-    console.log("answer", answer, "selection", selection);
     let wins = this.state.wins;
     let attempts = this.state.attempts;
     if (selection === answer) {
