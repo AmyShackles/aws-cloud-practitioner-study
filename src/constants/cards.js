@@ -101,32 +101,37 @@ module.exports = {
         "S3 Intelligent-Tiering is ideal for data with unknown or changing access patterns.\nS3 Intelligent-Tiering is the first cloud object storage class that delivers automatic cost savings by moving data between two access tiers — frequent access and infrequent access — when access patterns change.",
     },
     {
-      front: "",
-      back: "",
+      front: "What is a Standard RI?",
+      back:
+        "Standard RIs provide the most significant discount (up to 75% off On-Demand) and are best suited for steady-state usage. Standard Reserved Instances are not modifiable",
     },
     {
-      front: "",
-      back: "",
+      front: "What is a Scheduled RI?",
+      back:
+        "Scheduled RIs are available to launch within the time windows you reserve. This option allows you to match your capacity reservation to a predictable recurring schedule that only requires a fraction of a day, a week, or a month. Scheduled Reserved Instances are not modifiable",
     },
     {
-      front: "",
-      back: "",
+      front: "What is a subnet?",
+      back: "A subnet is a range of IP addresses in your VPC",
     },
     {
-      front: "",
-      back: "",
+      front: "What is Amazon Redshift?",
+      back:
+        "Amazon Redshift is a fast, fully managed data warehouse service that is specifically designed for online analytic processing (OLAP) and business intelligence (BI) applications, which require complex queries against large datasets.  It only supports relational data, not key-value data.",
     },
     {
-      front: "",
-      back: "",
+      front: "What is Amazon Aurora?",
+      back:
+        "Amazon Aurora is a MySQL and PostgreSQL-compatible relational database",
     },
     {
-      front: "",
-      back: "",
+      front: "What is Amazon RDS?",
+      back: "Amazon RDS is a relational database",
     },
     {
-      front: "",
-      back: "",
+      front: "What is AWS Operations Support?",
+      back:
+        "AWS Operations Support is an Enterprise support program that provides operations assessments and analysis to identify gaps across the operations lifecycle, as well as recommendations based on best practices.",
     },
     {
       front: "",

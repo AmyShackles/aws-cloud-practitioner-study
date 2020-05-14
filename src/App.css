@@ -2,6 +2,7 @@
   text-align: center;
   background-color: #282c34;
   min-height: 100vh;
+  height: 100%;
 }
 #card {
   width: 50vw;
@@ -23,13 +24,14 @@
   margin: 0;
 }
 .buttons {
-  margin: 5vh auto;
+  margin: 2.5vh auto 0;
+  padding-bottom: 2.5vh;
   display: flex;
   justify-content: space-evenly;
   width: 80%;
 }
 .buttons button {
-  padding: 5vh;
+  padding: 2.5vh;
   font-size: 16px;
 }
 .App-logo {
@@ -45,7 +47,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 20vh;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,4 +67,44 @@
   to {
     transform: rotate(360deg);
   }
+}
+.correct {
+  border: 1px solid black;
+  background-color: greenyellow;
+}
+.incorrect {
+  background-color: red;
+}
+.quiz {
+  width: 50vw;
+  height: min-content;
+  min-height: 50vh;
+  background-color: white;
+  margin: 0 auto 2.5vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.quiz h2 {
+  font-weight: bold;
+  font-family: "serif";
+}
+.option {
+  font-size: 1.5em;
+}
+.quiz ul {
+  list-style-type: none;
+  text-align: left;
+  padding-inline-start: 0;
+}
+.quiz li {
+  padding: 15px;
+}
+.card {
+  width: 100%;
+}
+.score {
+  color: white;
+  font-size: 20px;
 }
