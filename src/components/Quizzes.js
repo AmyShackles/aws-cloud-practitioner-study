@@ -40,7 +40,6 @@ class Quizzes extends React.Component {
     );
   }
   handleProblemChange = () => {
-    console.log("HOW MANY TIMES?!");
     const alreadySeen = this.state.problemsSeen;
     let randomId = Math.floor(
       Math.random() * this.state.problemsAvailable.length
@@ -119,7 +118,6 @@ class Quizzes extends React.Component {
     this.setState({ selection, attempts: ++attempts });
   };
   handleKeyPress = (event, validKeys, callback) => {
-    console.log("what is the callback?", callback);
     if (validKeys.includes(event.key)) {
       callback();
     }

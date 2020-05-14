@@ -68,16 +68,11 @@ class Prompts extends React.Component {
     });
   };
   prev = () => {
-    console.log("Are you firing?");
-    const newCurrentId = this.state.prevCardId;
-    const newCurrent = this.state.prevCard;
-    const newPrevId = this.state.currentCardId;
-    const newPrev = this.state.currentCard;
     this.setState({
-      currentCard: newCurrent,
-      currentCardId: newCurrentId,
-      prevCard: newPrev,
-      prevCardId: newPrevId,
+      currentCard: this.state.prevCard,
+      currentCardId: this.state.prevCardId,
+      prevCard: this.state.currentCard,
+      prevCardId: this.state.currentCardId,
     });
   };
 
