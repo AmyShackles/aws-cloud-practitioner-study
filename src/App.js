@@ -17,10 +17,18 @@ const App = () => {
       </header>
       <main>
         <div className="buttons">
-          <button onClick={() => handleStudyChange("prompt")}>
+          <button
+            className="flashcardDeck"
+            onClick={() => handleStudyChange("prompt")}
+          >
             Flashcards
           </button>
-          <button onClick={() => handleStudyChange("quiz")}>Quizzes</button>
+          <button
+            className="quizDeck"
+            onClick={() => handleStudyChange("quiz")}
+          >
+            Quizzes
+          </button>
         </div>
         {studyType === "quiz" && <Quizzes />}
         {studyType === "prompt" && <Prompts />}

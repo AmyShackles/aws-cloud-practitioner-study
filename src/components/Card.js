@@ -11,9 +11,19 @@ const Card = ({ front, back, cardFlip, side }) => {
       {text}
     </p>
   ));
+  const handleKeyPress = (event, validKeys, callback) => {
+    if (validKeys.includes(event.key)) {
+      callback();
+    }
+  };
 
   return (
-    <div id="card" onClick={cardFlip}>
+    <div
+      id="card"
+      onClick={cardFlip}
+      onKeyDown={(event) => handleKeyPress(event, ["Enter"], cardFlip)}
+      tabIndex="0"
+    >
       <div id="card-internal">
         {side === "back" ? backFormatted : frontFormatted}
       </div>

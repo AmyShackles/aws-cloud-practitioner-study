@@ -50,7 +50,8 @@ class Prompts extends React.Component {
         randomId = Math.floor(Math.random() * this.state.cardsAvailable.length);
       }
     }
-    alreadySeen.push(this.state.cardsAvailable[randomId]);
+    const newCard = this.state.cardsAvailable[randomId];
+    alreadySeen.push(newCard);
     let cardsAvailable = this.state.cardsAvailable.filter(
       (card) => !alreadySeen.includes(card)
     );
@@ -58,7 +59,7 @@ class Prompts extends React.Component {
     const prevCard = this.state.currentCard;
     this.setState({
       currentCardId: randomId,
-      currentCard: this.state.cardsAvailable[randomId],
+      currentCard: newCard,
       prevCard,
       prevCardId,
       side: "front",
@@ -67,11 +68,16 @@ class Prompts extends React.Component {
     });
   };
   prev = () => {
+    console.log("Are you firing?");
+    const newCurrentId = this.state.prevCardId;
+    const newCurrent = this.state.prevCard;
+    const newPrevId = this.state.currentCardId;
+    const newPrev = this.state.currentCard;
     this.setState({
-      currentCard: this.state.prevCard,
-      currentCardId: this.state.prevCardId,
-      prevCard: this.state.currentCard,
-      prevCardId: this.state.currentCardId,
+      currentCard: newCurrent,
+      currentCardId: newCurrentId,
+      prevCard: newPrev,
+      prevCardId: newPrevId,
     });
   };
 
@@ -99,23 +105,57 @@ class Prompts extends React.Component {
   resetDeck = () => {
     this.setState({ cardsAvailable: cards, cardsSeen: [] }, () => this.next());
   };
+  handleKeyPress = (event, validKeys, callback) => {
+    if (validKeys.includes(event.key)) {
+      callback();
+    }
+  };
   render() {
     if (this.state.currentCard) {
       return (
         <>
-          <Card
-            front={this.state.currentCard.front}
-            back={this.state.currentCard.back}
-            cardFlip={this.cardFlip}
-            side={this.state.side}
-          />
+          <div>
+            <Card
+              front={this.state.currentCard.front}
+              back={this.state.currentCard.back}
+              cardFlip={this.cardFlip}
+              side={this.state.side}
+            />
+          </div>
           <div className="buttons">
-            {this.state.prevCard && (
-              <button onClick={this.prev}>Previous card</button>
+            {this.state.prevCardId && (
+              <button
+                id="previous-card"
+                className="previous"
+                onClick={this.prev}
+                onKeyDown={(event) =>
+                  this.handleKeyPress(event, ["Enter"], this.prev)
+                }
+              >
+                Previous
+              </button>
             )}
-            <button onClick={this.remove}>Remove card from deck</button>
+            <button
+              id="remove-card"
+              className="remove"
+              onClick={this.remove}
+              onKeyDown={(event) =>
+                this.handleKeyPress(event, ["Enter"], this.remove)
+              }
+            >
+              Remove card from deck
+            </button>
             {!this.state.lastCard && (
-              <button onClick={this.next}>Random card</button>
+              <button
+                id="next-card"
+                className="next"
+                onClick={this.next}
+                onKeyDown={(event) =>
+                  this.handleKeyPress(event, ["Enter"], this.next)
+                }
+              >
+                Next
+              </button>
             )}
           </div>
         </>
@@ -126,7 +166,15 @@ class Prompts extends React.Component {
           <p>There are no more cards in the deck</p>
 
           <div className="buttons">
-            <button onClick={this.resetDeck}>Reset deck</button>
+            <button
+              className="reset"
+              onClick={this.resetDeck}
+              onKeyDown={(event) =>
+                this.handleKeyPress(event, ["Enter"], this.resetDeck)
+              }
+            >
+              Reset deck
+            </button>
           </div>
         </div>
       );

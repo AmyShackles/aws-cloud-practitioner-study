@@ -124,3 +124,50 @@ main {
   color: white;
   font-size: 26px;
 }
+.remove {
+  background-color: red;
+  color: white;
+}
+.remove:hover,
+.remove:focus {
+  background-color: darkred;
+}
+.reset {
+  background-color: green;
+  color: white;
+}
+.reset:hover,
+.reset:focus {
+  background-color: darkgreen;
+}
+.previous,
+.next {
+  font-size: 20px;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+}
+.previous::before,
+.previous::after {
+  content: "<<";
+}
+.next::before,
+.next::after {
+  content: ">>";
+}
+.next:hover,
+.next:focus,
+.previous:hover,
+.previous:focus {
+  background-color: gray;
+  color: white;
+}
+
+.flashcardDeck:hover,
+.flashcardDeck:focus,
+.quizDeck:hover,
+.quizDeck:focus {
+  background-color: black;
+  color: white;
+}

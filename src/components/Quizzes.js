@@ -117,14 +117,25 @@ class Quizzes extends React.Component {
     }
     this.setState({ selection, attempts: ++attempts });
   };
+  handleKeyPress = (event, validKeys, callback) => {
+    if (validKeys.includes(event.key)) {
+      callback();
+    }
+  };
   render() {
     if (this.state.currentProblem) {
       return (
         <>
           <div id="quiz">
             {this.state.prevProblem ? (
-              <button className="buttons" onClick={this.prev}>
-                Previous question
+              <button
+                className="buttons previous"
+                onClick={this.prev}
+                onKeyDown={(event) =>
+                  this.handleKeyPress(event, ["Enter"], this.prev)
+                }
+              >
+                Previous
               </button>
             ) : (
               <div className="buttons" />
@@ -140,13 +151,27 @@ class Quizzes extends React.Component {
               attempts={this.state.attempts}
             />
             {!this.state.lastProblem && (
-              <button className="buttons" onClick={this.next}>
-                Random question
+              <button
+                className="buttons next"
+                onClick={this.next}
+                onKeyDown={(event) =>
+                  this.handleKeyPress(event, ["Enter"], this.next)
+                }
+              >
+                Next
               </button>
             )}
           </div>
           <div className="buttons">
-            <button onClick={this.remove}>Remove question from deck</button>
+            <button
+              className="remove"
+              onClick={this.remove}
+              onKeyDown={(event) =>
+                this.handleKeyPress(event, ["Enter"], this.remove)
+              }
+            >
+              Remove question from deck
+            </button>
           </div>
         </>
       );
@@ -157,7 +182,15 @@ class Quizzes extends React.Component {
             <p>There are no more cards in the deck</p>
           </div>
           <div className="buttons">
-            <button onClick={this.resetDeck}>Reset deck</button>
+            <button
+              className="reset"
+              onClick={this.resetDeck}
+              onKeyDown={(event) =>
+                this.handleKeyPress(event, ["Enter"], this.resetDeck)
+              }
+            >
+              Reset deck
+            </button>
           </div>
         </>
       );
