@@ -129,7 +129,7 @@ class Prompts extends React.Component {
                 className="previous"
                 onClick={this.prev}
                 onKeyDown={(event) =>
-                  this.handleKeyPress(event, ["Enter"], this.prev)
+                  this.handleKeyPress(event, ["Enter"], () => this.prev)
                 }
               >
                 Previous
@@ -140,7 +140,7 @@ class Prompts extends React.Component {
               className="remove"
               onClick={this.remove}
               onKeyDown={(event) =>
-                this.handleKeyPress(event, ["Enter"], this.remove)
+                this.handleKeyPress(event, ["Enter"], () => this.remove)
               }
             >
               Remove card from deck
@@ -151,7 +151,7 @@ class Prompts extends React.Component {
                 className="next"
                 onClick={this.next}
                 onKeyDown={(event) =>
-                  this.handleKeyPress(event, ["Enter"], this.next)
+                  this.handleKeyPress(event, ["Enter"], () => this.next)
                 }
               >
                 Next
@@ -170,7 +170,7 @@ class Prompts extends React.Component {
               className="reset"
               onClick={this.resetDeck}
               onKeyDown={(event) =>
-                this.handleKeyPress(event, ["Enter"], this.resetDeck)
+                this.handleKeyPress(event, ["Enter"], () => this.resetDeck)
               }
             >
               Reset deck

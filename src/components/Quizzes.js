@@ -40,6 +40,7 @@ class Quizzes extends React.Component {
     );
   }
   handleProblemChange = () => {
+    console.log("HOW MANY TIMES?!");
     const alreadySeen = this.state.problemsSeen;
     let randomId = Math.floor(
       Math.random() * this.state.problemsAvailable.length
@@ -118,6 +119,7 @@ class Quizzes extends React.Component {
     this.setState({ selection, attempts: ++attempts });
   };
   handleKeyPress = (event, validKeys, callback) => {
+    console.log("what is the callback?", callback);
     if (validKeys.includes(event.key)) {
       callback();
     }
@@ -132,7 +134,7 @@ class Quizzes extends React.Component {
                 className="buttons previous"
                 onClick={this.prev}
                 onKeyDown={(event) =>
-                  this.handleKeyPress(event, ["Enter"], this.prev)
+                  this.handleKeyPress(event, ["Enter"], () => this.prev)
                 }
               >
                 Previous
@@ -155,7 +157,7 @@ class Quizzes extends React.Component {
                 className="buttons next"
                 onClick={this.next}
                 onKeyDown={(event) =>
-                  this.handleKeyPress(event, ["Enter"], this.next)
+                  this.handleKeyPress(event, ["Enter"], () => this.next)
                 }
               >
                 Next
@@ -167,7 +169,7 @@ class Quizzes extends React.Component {
               className="remove"
               onClick={this.remove}
               onKeyDown={(event) =>
-                this.handleKeyPress(event, ["Enter"], this.remove)
+                this.handleKeyPress(event, ["Enter"], () => this.remove)
               }
             >
               Remove question from deck
@@ -186,7 +188,7 @@ class Quizzes extends React.Component {
               className="reset"
               onClick={this.resetDeck}
               onKeyDown={(event) =>
-                this.handleKeyPress(event, ["Enter"], this.resetDeck)
+                this.handleKeyPress(event, ["Enter"], () => this.resetDeck)
               }
             >
               Reset deck
