@@ -15,25 +15,29 @@ class Prompts extends React.Component {
     };
   }
   componentDidMount() {
-    this.setState(
-      {
-        currentCardId: Math.floor(
-          Math.random() * this.state.cardsAvailable.length
-        ),
-      },
-      () => {
-        const alreadySeen = this.state.cardsSeen;
-        alreadySeen.push(this.state.cardsAvailable[this.state.currentCardId]);
-        const cardsAvailable = this.state.cardsAvailable.filter(
-          (card) => !alreadySeen.includes(card)
-        );
-        this.setState({
-          currentCard: this.state.cardsAvailable[this.state.currentCardId],
-          cardsSeen: alreadySeen,
-          cardsAvailable,
-        });
-      }
-    );
+    if (this.state.cardsAvailable.length > 0) {
+      this.setState(
+        {
+          currentCardId: Math.floor(
+            Math.random() * this.state.cardsAvailable.length
+          ),
+        },
+        () => {
+          const alreadySeen = this.state.cardsSeen;
+          alreadySeen.push(this.state.cardsAvailable[this.state.currentCardId]);
+          const cardsAvailable = this.state.cardsAvailable.filter(
+            (card) => !alreadySeen.includes(card)
+          );
+          this.setState({
+            currentCard: this.state.cardsAvailable[this.state.currentCardId],
+            cardsSeen: alreadySeen,
+            cardsAvailable,
+          });
+        }
+      );
+    } else {
+      return <div>Please add cards to the deck</div>;
+    }
   }
   cardFlip = () => {
     if (this.state.side === "front") {
@@ -99,6 +103,9 @@ class Prompts extends React.Component {
     this.setState({ cardsAvailable: cards, cardsSeen: [] }, () => this.next());
   };
   render() {
+    if (cards.length === 0) {
+      return <div className="text">Please add cards to the deck</div>;
+    }
     if (this.state.currentCard) {
       return (
         <>

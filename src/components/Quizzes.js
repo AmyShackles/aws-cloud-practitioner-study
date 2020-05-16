@@ -17,28 +17,30 @@ class Quizzes extends React.Component {
     };
   }
   componentDidMount() {
-    this.setState(
-      {
-        currentProblemId: Math.floor(
-          Math.random() * this.state.problemsAvailable.length
-        ),
-      },
-      () => {
-        const alreadySeen = this.state.problemsSeen;
-        alreadySeen.push(
-          this.state.problemsAvailable[this.state.currentProblemId]
-        );
-        const problemsAvailable = this.state.problemsAvailable.filter(
-          (card) => !alreadySeen.includes(card)
-        );
-        this.setState({
-          currentProblem: this.state.problemsAvailable[
-            this.state.currentProblemId
-          ],
-          problemsAvailable,
-        });
-      }
-    );
+    if (this.state.problemsAvailable.length > 0) {
+      this.setState(
+        {
+          currentProblemId: Math.floor(
+            Math.random() * this.state.problemsAvailable.length
+          ),
+        },
+        () => {
+          const alreadySeen = this.state.problemsSeen;
+          alreadySeen.push(
+            this.state.problemsAvailable[this.state.currentProblemId]
+          );
+          const problemsAvailable = this.state.problemsAvailable.filter(
+            (card) => !alreadySeen.includes(card)
+          );
+          this.setState({
+            currentProblem: this.state.problemsAvailable[
+              this.state.currentProblemId
+            ],
+            problemsAvailable,
+          });
+        }
+      );
+    }
   }
   prev = () => {
     this.setState({
@@ -116,6 +118,9 @@ class Quizzes extends React.Component {
     this.setState({ selection, attempts: ++attempts });
   };
   render() {
+    if (quizzes.length === 0) {
+      return <div className="text">Please add cards to the deck</div>;
+    }
     if (this.state.currentProblem) {
       return (
         <>
@@ -147,7 +152,7 @@ class Quizzes extends React.Component {
     } else {
       return (
         <>
-          <div className="reset-text">
+          <div className="text">
             <p>There are no more cards in the deck</p>
           </div>
           <div className="buttons resetButton">
