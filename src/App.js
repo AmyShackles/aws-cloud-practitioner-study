@@ -18,13 +18,15 @@ const App = () => {
       <main>
         <div className="buttons">
           <button
-            className="flashcardDeck"
+            className={
+              studyType === "prompt" ? "flashcardDeck active" : "flashcardDeck"
+            }
             onClick={() => handleStudyChange("prompt")}
           >
             Flashcards
           </button>
           <button
-            className="quizDeck"
+            className={studyType === "quiz" ? "quizDeck active" : "quizDeck"}
             onClick={() => handleStudyChange("quiz")}
           >
             Quizzes

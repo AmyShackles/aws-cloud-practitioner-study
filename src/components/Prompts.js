@@ -1,6 +1,7 @@
 import React from "react";
 import { cards } from "../constants/cards.js";
 import { Card } from "./Card.js";
+import { Layout } from "./Layout.js";
 
 class Prompts extends React.Component {
   constructor(props) {
@@ -41,7 +42,16 @@ class Prompts extends React.Component {
       this.setState({ side: "front" });
     }
   };
-  handleCardChange = () => {
+  prev = () => {
+    this.setState({
+      currentCard: this.state.prevCard,
+      currentCardId: this.state.prevCardId,
+      prevCard: this.state.currentCard,
+      prevCardId: this.state.currentCardId,
+    });
+  };
+
+  next = () => {
     const alreadySeen = this.state.cardsSeen;
 
     let randomId = Math.floor(Math.random() * this.state.cardsAvailable.length);
@@ -67,18 +77,6 @@ class Prompts extends React.Component {
       cardsAvailable,
     });
   };
-  prev = () => {
-    this.setState({
-      currentCard: this.state.prevCard,
-      currentCardId: this.state.prevCardId,
-      prevCard: this.state.currentCard,
-      prevCardId: this.state.currentCardId,
-    });
-  };
-
-  next = () => {
-    this.handleCardChange();
-  };
   remove = () => {
     const cardsAfterRemoval = this.state.cardsAvailable.filter(
       (card) => card.front !== this.state.currentCard.front
@@ -100,74 +98,38 @@ class Prompts extends React.Component {
   resetDeck = () => {
     this.setState({ cardsAvailable: cards, cardsSeen: [] }, () => this.next());
   };
-  handleKeyPress = (event, validKeys, callback) => {
-    if (validKeys.includes(event.key)) {
-      callback();
-    }
-  };
   render() {
     if (this.state.currentCard) {
       return (
         <>
-          <div>
-            <Card
-              front={this.state.currentCard.front}
-              back={this.state.currentCard.back}
-              cardFlip={this.cardFlip}
-              side={this.state.side}
-            />
-          </div>
-          <div className="buttons">
-            {this.state.prevCardId && (
-              <button
-                id="previous-card"
-                className="previous"
-                onClick={this.prev}
-                onKeyDown={(event) =>
-                  this.handleKeyPress(event, ["Enter"], () => this.prev)
-                }
-              >
-                Previous
-              </button>
-            )}
-            <button
-              id="remove-card"
-              className="remove"
-              onClick={this.remove}
-              onKeyDown={(event) =>
-                this.handleKeyPress(event, ["Enter"], () => this.remove)
-              }
-            >
+          <Layout
+            prevCardId={this.state.prevCardId}
+            prev={this.prev}
+            next={this.next}
+            lactCard={this.state.lastCard}
+            card={
+              <Card
+                front={this.state.currentCard.front}
+                back={this.state.currentCard.back}
+                cardFlip={this.cardFlip}
+                side={this.state.side}
+              />
+            }
+          />
+          <div className="buttons removeButton">
+            <button id="remove-card" className="remove" onClick={this.remove}>
               Remove card from deck
             </button>
-            {!this.state.lastCard && (
-              <button
-                id="next-card"
-                className="next"
-                onClick={this.next}
-                onKeyDown={(event) =>
-                  this.handleKeyPress(event, ["Enter"], () => this.next)
-                }
-              >
-                Next
-              </button>
-            )}
           </div>
         </>
       );
     } else {
       return (
-        <div>
+        <div className="reset-text">
           <p>There are no more cards in the deck</p>
 
-          <div className="buttons">
-            <button
-              className="reset"
-              onClick={this.resetDeck}
-              onKeyDown={(event) =>
-                this.handleKeyPress(event, ["Enter"], () => this.resetDeck)
-              }
-            >
+          <div className="buttons resetButton">
+            <button className="reset" onClick={this.resetDeck}>
               Reset deck
             </button>
           </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { quizzes } from "../constants/quizzes.js";
 import { Quiz } from "./Quiz.js";
+import { Layout } from "./Layout.js";
 
 class Quizzes extends React.Component {
   constructor(props) {
@@ -39,7 +40,17 @@ class Quizzes extends React.Component {
       }
     );
   }
-  handleProblemChange = () => {
+  prev = () => {
+    this.setState({
+      currentProblem: this.state.prevProblem,
+      currentProblemId: this.state.prevProblemId,
+      prevProblem: this.state.currentProblem,
+      prevProblemId: this.state.currentProblemId,
+      selection: "",
+    });
+  };
+
+  next = () => {
     const alreadySeen = this.state.problemsSeen;
     let randomId = Math.floor(
       Math.random() * this.state.problemsAvailable.length
@@ -69,19 +80,6 @@ class Quizzes extends React.Component {
       problemsSeen: alreadySeen,
       problemsAvailable,
     });
-  };
-  prev = () => {
-    this.setState({
-      currentProblem: this.state.prevProblem,
-      currentProblemId: this.state.prevProblemId,
-      prevProblem: this.state.currentProblem,
-      prevProblemId: this.state.currentProblemId,
-      selection: "",
-    });
-  };
-
-  next = () => {
-    this.handleProblemChange();
   };
   remove = () => {
     const problemsAfterRemoval = this.state.problemsAvailable.filter(
@@ -117,59 +115,30 @@ class Quizzes extends React.Component {
     }
     this.setState({ selection, attempts: ++attempts });
   };
-  handleKeyPress = (event, validKeys, callback) => {
-    if (validKeys.includes(event.key)) {
-      callback();
-    }
-  };
   render() {
     if (this.state.currentProblem) {
       return (
         <>
-          <div id="quiz">
-            {this.state.prevProblem ? (
-              <button
-                className="buttons previous"
-                onClick={this.prev}
-                onKeyDown={(event) =>
-                  this.handleKeyPress(event, ["Enter"], () => this.prev)
-                }
-              >
-                Previous
-              </button>
-            ) : (
-              <div className="buttons" />
-            )}
+          <Layout
+            prevCardId={this.state.prevProblem}
+            prev={this.prev}
+            next={this.next}
+            lastCard={this.lastCard}
+            card={
+              <Quiz
+                question={this.state.currentProblem.question}
+                options={this.state.currentProblem.options}
+                answer={this.state.currentProblem.answer}
+                selection={this.state.selection}
+                setSelected={this.setSelected.bind(this)}
+                wins={this.state.wins}
+                attempts={this.state.attempts}
+              />
+            }
+          />
 
-            <Quiz
-              question={this.state.currentProblem.question}
-              options={this.state.currentProblem.options}
-              answer={this.state.currentProblem.answer}
-              selection={this.state.selection}
-              setSelected={this.setSelected.bind(this)}
-              wins={this.state.wins}
-              attempts={this.state.attempts}
-            />
-            {!this.state.lastProblem && (
-              <button
-                className="buttons next"
-                onClick={this.next}
-                onKeyDown={(event) =>
-                  this.handleKeyPress(event, ["Enter"], () => this.next)
-                }
-              >
-                Next
-              </button>
-            )}
-          </div>
-          <div className="buttons">
-            <button
-              className="remove"
-              onClick={this.remove}
-              onKeyDown={(event) =>
-                this.handleKeyPress(event, ["Enter"], () => this.remove)
-              }
-            >
+          <div className="buttons removeButton">
+            <button className="remove" onClick={this.remove}>
               Remove question from deck
             </button>
           </div>
@@ -178,17 +147,11 @@ class Quizzes extends React.Component {
     } else {
       return (
         <>
-          <div id="quiz">
+          <div className="reset-text">
             <p>There are no more cards in the deck</p>
           </div>
-          <div className="buttons">
-            <button
-              className="reset"
-              onClick={this.resetDeck}
-              onKeyDown={(event) =>
-                this.handleKeyPress(event, ["Enter"], () => this.resetDeck)
-              }
-            >
+          <div className="buttons resetButton">
+            <button className="reset" onClick={this.resetDeck}>
               Reset deck
             </button>
           </div>

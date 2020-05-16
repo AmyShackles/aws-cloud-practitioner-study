@@ -19,9 +19,9 @@ const Quiz = ({
         Score: {wins}/{attempts} :{" "}
         {wins && attempts && Math.round(wins / attempts) * 100}%
       </div>
-      <div className="quiz">
-        <h2>{question}</h2>
-        <div className="card">
+      <div className="card" tabIndex="0">
+        <div className="card-internal">
+          <h2>{question}</h2>
           <ul>
             {options.map((option, index) => {
               return (

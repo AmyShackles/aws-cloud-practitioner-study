@@ -18,14 +18,17 @@ const Card = ({ front, back, cardFlip, side }) => {
   };
 
   return (
-    <div
-      id="card"
-      onClick={cardFlip}
-      onKeyDown={(event) => handleKeyPress(event, ["Enter"], cardFlip)}
-      tabIndex="0"
-    >
-      <div id="card-internal">
-        {side === "back" ? backFormatted : frontFormatted}
+    <div>
+      <div className="score">&nbsp;</div>
+      <div
+        className="card"
+        onClick={cardFlip}
+        onKeyDown={(event) => handleKeyPress(event, ["Enter", " "], cardFlip)}
+        tabIndex="0"
+      >
+        <div className="card-internal">
+          {side === "back" ? backFormatted : frontFormatted}
+        </div>
       </div>
     </div>
   );
