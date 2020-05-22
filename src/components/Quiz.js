@@ -17,7 +17,7 @@ const Quiz = ({
     <div>
       <div className="score">
         Score: {wins}/{attempts} :{" "}
-        {wins && attempts && Math.round(wins / attempts) * 100}%
+        {wins && attempts && ((wins / attempts) * 100).toFixed(2)}%
       </div>
       <div className="card" tabIndex="0">
         <div className="card-internal">
@@ -27,11 +27,18 @@ const Quiz = ({
               return (
                 <li
                   className={
-                    selection && selection === option && option === answer
+                    selection &&
+                    selection.length > 0 &&
+                    selection.includes(option) &&
+                    answer.includes(option)
                       ? "correct selection"
-                      : selection && option === answer
+                      : selection &&
+                        selection.length == answer.length &&
+                        answer.includes(option)
                       ? "correct"
-                      : selection && selection === option
+                      : selection &&
+                        selection.length == answer.length &&
+                        selection.includes(option)
                       ? "incorrect"
                       : ""
                   }
@@ -42,11 +49,13 @@ const Quiz = ({
                     key={index}
                     value={option}
                     checked={
-                      selection && +selection === option && option === answer
+                      selection.length > 0 &&
+                      selection.includes(option) &&
+                      answer.includes(option)
                     }
                     onChange={handleSelection}
                     type="checkbox"
-                    disabled={selection}
+                    disabled={selection.length === answer.length}
                   />
                   <label className="option" htmlFor={`option-${index}`}>
                     {option}

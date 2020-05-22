@@ -1,5 +1,5 @@
 import React from "react";
-import { cards } from "../constants/cards.js";
+import { cards } from "../data/cards.js";
 import { Card } from "./Card.js";
 import { Layout } from "./Layout.js";
 

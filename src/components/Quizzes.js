@@ -1,5 +1,5 @@
 import React from "react";
-import { quizzes } from "../constants/quizzes.js";
+import { quizzes } from "../data/quizzes.js";
 import { Quiz } from "./Quiz.js";
 import { Layout } from "./Layout.js";
 
@@ -7,14 +7,15 @@ class Quizzes extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      problemsAvailable: quizzes,
+      problemsAvailable: quizzes.filter((quiz) => quiz.question.length > 0),
       prevProblem: null,
       lastProblem: false,
-      selection: "",
+      selection: [],
       problemsSeen: [],
       wins: 0,
       attempts: 0,
     };
+    this.setSelected = this.setSelected.bind(this);
   }
   componentDidMount() {
     if (this.state.problemsAvailable.length > 0) {
@@ -48,7 +49,7 @@ class Quizzes extends React.Component {
       currentProblemId: this.state.prevProblemId,
       prevProblem: this.state.currentProblem,
       prevProblemId: this.state.currentProblemId,
-      selection: "",
+      selection: [],
     });
   };
 
@@ -78,7 +79,7 @@ class Quizzes extends React.Component {
       currentProblem: this.state.problemsAvailable[randomId],
       prevProblem,
       prevProblemId,
-      selection: "",
+      selection: [],
       problemsSeen: alreadySeen,
       problemsAvailable,
     });
@@ -93,7 +94,7 @@ class Quizzes extends React.Component {
         currentProblemId: "",
         currentProblem: null,
         lastProblem: problemsAfterRemoval.length === 1,
-        selection: "",
+        selection: [],
       },
       () => {
         if (problemsAfterRemoval.length > 0) {
@@ -108,14 +109,22 @@ class Quizzes extends React.Component {
       () => this.next()
     );
   };
-  setSelected = (selection) => {
-    const { answer } = this.state.currentProblem;
-    let wins = this.state.wins;
-    let attempts = this.state.attempts;
-    if (selection === answer) {
-      this.setState({ wins: ++wins });
-    }
-    this.setState({ selection, attempts: ++attempts });
+  setSelected = (ans) => {
+    const selection = this.state.selection;
+    this.setState({ selection: [...this.state.selection, ans] }, () => {
+      if (
+        this.state.selection.length === this.state.currentProblem.answer.length
+      ) {
+        const correct = this.state.selection.filter((ans) =>
+          this.state.currentProblem.answer.includes(ans)
+        );
+
+        if (correct.length === this.state.currentProblem.answer.length) {
+          this.setState({ wins: this.state.wins + 1 });
+        }
+        this.setState({ attempts: this.state.attempts + 1 });
+      }
+    });
   };
   render() {
     if (quizzes.length === 0) {
@@ -135,7 +144,7 @@ class Quizzes extends React.Component {
                 options={this.state.currentProblem.options}
                 answer={this.state.currentProblem.answer}
                 selection={this.state.selection}
-                setSelected={this.setSelected.bind(this)}
+                setSelected={this.setSelected}
                 wins={this.state.wins}
                 attempts={this.state.attempts}
               />
